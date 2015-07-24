@@ -63,16 +63,20 @@ class server(object):
         for i in range(0, len(args)):
             # Try to send it
             try:
-                # Encode the message properly
-                args[i] = str(args[i])
+                # Dump objects to strings if possible
+                try:
+                    args[i] = str(args[i])
+                # If you can't ascci encode thats ok
+                except Exception as error:
+                    pass
                 args[i] = args[i].encode(constants.ENCODEING)
                 # Send the message to the client
                 self.silly_conns[client].sendall(args[i])
             # Client disconnected so call self.silly_close_conn
-            except BrokenPipeError:
-                self.silly_close_conn(client)
+            # except BrokenPipeError:
             # Some other error happened, log it
             except Exception as error:
+                self.silly_close_conn(client)
                 self.log(error)
 
     def silly_close_conn(self, client):
@@ -138,6 +142,8 @@ def main():
     # In python 2x you need to send a ctrl-d to flush the buffer
     # and send everything you have typed and hit enter on
     for send in sys.stdin:
+        if (sys.version_info < (3, 0)):
+            send = send.decode(constants.ENCODEING)
         # Send any input
         test.write(send)
 

@@ -62,27 +62,33 @@ class client(object):
         Then whenever the word test is seen all that was sent before it
         incuding the word test would be sent to client.recv
         """
+        # Encode split to bytes so we can receive unicode correctly
+        if split:
+            split = split.encode(constants.ENCODEING)
         # So that close will work
         self.silly_running = True
         # Data buffer
-        data = u""
+        data = b""
         while self.silly_running:
             # Try to get data from server
             try:
-                data += self.silly_socket.recv(1).decode(constants.ENCODEING)
+                data += self.silly_socket.recv(1)
             # Server shutdown so close
-            except ConnectionResetError as error:
+            except Exception as error:
                 self.close()
+                raise
             # No data being received so close
             if len(data) < 1:
                 self.close()
             # Senf data to self.recv every char received or on split
             elif split is False or data[-len(split):] == split:
+                # Decode the data
+                data = data.decode(constants.ENCODEING)
                 # Call the recv function in a thread so we
                 # can go bask to recving
                 thread.start_new_thread(self.recv, (data, ))
                 # Clear data buffer
-                data = u""
+                data = b""
 
     def write(self, message):
         """
