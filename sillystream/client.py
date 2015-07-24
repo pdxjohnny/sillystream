@@ -101,7 +101,7 @@ class client(object):
         """
         Handles a message from the server
         """
-        self.log('Received', repr(message))
+        print(message.rstrip())
 
     def close(self):
         """
@@ -122,6 +122,9 @@ def main():
     # In python 2x you need to send a ctrl-d to flush the buffer
     # and send everything you have typed and hit enter on
     for send in sys.stdin:
+        # Python 2x reads in unicode weird
+        if (sys.version_info < (3, 0)):
+            send = send.decode(constants.ENCODEING)
         # Send any input
         test.write(send)
     # Close connection
