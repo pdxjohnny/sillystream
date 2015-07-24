@@ -1,0 +1,7 @@
+HOST = "localhost"
+ADDRESS = "0.0.0.0"
+PORT = 34539
+LISTEN = 10
+SPLIT = "\n"
+ENCODEING = "UTF-8"
+LOGGING = True
