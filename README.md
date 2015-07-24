@@ -6,7 +6,7 @@ connected to the sillystream.server.
 It is especially useful for daemon processes.
 
 Docker building and pushing using sillystream to see output
-of remote daemon
+of remote daemon [blog post](http://pdxjohnny.github.io/2015/07/24/gitlab-automated-docker-builds.html)
 
 ![sillystream-docker](https://raw.githubusercontent.com/pdxjohnny/sillystream/master/examples/docker.gif)
 
