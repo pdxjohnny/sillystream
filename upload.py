@@ -3,12 +3,12 @@ import os
 import sys
 import shutil
 
-NAME = "sillystring"
+NAME = "sillystream"
 
 def update_version_files(version):
 	files = {
 		"setup.py": ("  version = ", "  version = \'%s\',\n"),
-		"sillystring/sillystring.py": ("__version__ = ", "__version__ = \"%s\"\n"),
+		"sillystream/constants.py": ("__version__ = ", "__version__ = \"%s\"\n"),
 		}
 	for name in files:
 		read_file = open(name,"rb")
